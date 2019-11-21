@@ -82,9 +82,16 @@ plt.show()
 # %%
 # import various linear regression options
 # scikit learn
-from sklearn.linear_model import LinearRegression
+try:
+    from sklearn.linear_model import LinearRegression
+except ModuleNotFoundError as e:
+    print("##### conda install sklearn #####")
+
 # statsmodels
-import statsmodels.api as sm
+try:
+    import statsmodels.api as sm
+except ModuleNotFoundError as e:
+    print("##### conda install statsmodels #####")
 
 # %%
 # get sflow arrays
@@ -137,7 +144,10 @@ plt.show()
 
 
 # %%
-from sklearn import svm
+try:
+    from sklearn import svm
+except ModuleNotFoundError as e:
+    print("##### conda install sklearn #####")
 # Support vector regression
 # Another simple method that can be more accurate
 # than OLS regression

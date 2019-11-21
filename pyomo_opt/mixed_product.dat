@@ -1,0 +1,21 @@
+param price :=
+0 40
+1 30
+;
+
+param labor_bounds :=
+0 80
+1 100
+;
+
+param demand_bounds := 
+0 40
+1 infinity
+;
+
+param labor_coefs := 
+0 0 1
+0 1 1
+1 0 2
+1 1 1
+;

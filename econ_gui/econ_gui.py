@@ -54,13 +54,13 @@ class MyMainScreen(widgets.QDialog):
             if know_index == 0:
                 self.ui.output_info_box.clear()
             if know_index == 1:
-                #cur_mes = unicode(self.ui.output_info_box.text()).encode('utf_8')
+                #cur_mes = unicode(self.ui.output_info_box.text())
                 message = 'That is not a valid capital costs calculation. Please select either "Annual Worth" or "Present Worth" from the "What do you know?" drop down box.'
                 self.ui.output_info_box.append(message)
             if know_index == 2:
                 self.ui.output_info_box.clear()
             if know_index == 3:
-                #cur_mes = unicode(self.ui.output_info_box.text()).encode('utf_8')
+                #cur_mes = unicode(self.ui.output_info_box.text())
                 message = 'That is not a valid capital costs calculation. Please select either "Annual Worth" or "Present Worth" from the "What do you know?" drop down box.'
                 self.ui.output_info_box.append(message)
 
@@ -68,11 +68,11 @@ class MyMainScreen(widgets.QDialog):
         sender = self.sender()
         sender_name = sender.objectName()
         if sender_name == 'amount_edit':
-            text = unicode(self.ui.amount_edit.text()).encode('utf_8')
+            text = self.ui.amount_edit.text()
             if text == 'Enter a number':
                 self.ui.amount_edit.selectAll()
         elif sender_name == 'period_edit':
-            text = unicode(self.ui.period_edit.text()).encode('utf_8')
+            text = self.ui.period_edit.text()
             if text == 'Enter a number':
                 self.ui.period_edit.selectAll()
 
@@ -108,22 +108,20 @@ class MyMainScreen(widgets.QDialog):
 
     def get_info(self):
         global input_info
-        amount = unicode(self.ui.amount_edit.text()).encode('utf_8')
+        amount = self.ui.amount_edit.text()
         amount = amount.replace(',', '')
-        periods = unicode(self.ui.period_edit.text()).encode('utf_8')
+        periods = self.ui.period_edit.text()
         if input_info['rate_type'] == 'effective':
-            input_info['effective'] = unicode(
-                self.ui.rate_edit.text()).encode('utf_8')
+            input_info['effective'] = self.ui.rate_edit.text()
         elif input_info['rate_type'] == 'nominal':
-            input_info['effective'] = unicode(
-                self.ui.eff_rate_edit.text()).encode('utf_8')
+            input_info['effective'] = self.ui.eff_rate_edit.text()
         input_info['amount'] = str(amount)
         input_info['periods'] = str(periods)
         self.calc_values()
 
     def effective_calc(self):
-        m = unicode(self.ui.eff_period_edit.text()).encode('utf_8')
-        r = unicode(self.ui.nominal_rate_edit.text()).encode('utf_8')
+        m = self.ui.eff_period_edit.text()
+        r = self.ui.nominal_rate_edit.text()
         effective_rate = '0'
         try:
             r = float(r)
@@ -156,7 +154,10 @@ class MyMainScreen(widgets.QDialog):
         elif input_info['know'] == '3':
             have = 'G'
         amount = float(input_info['amount'])
-        periods = float(input_info['periods'])
+        if find == 'C':
+            periods = 0
+        else:
+            periods = float(input_info['periods'])
         rate = float(input_info['effective'])
         result = gui_run(find, have, amount, periods, rate)
         self.ui.answer_edit.setText('{:,}'.format(result))

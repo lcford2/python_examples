@@ -37,3 +37,16 @@ instance.pprint()
 print(f"Profit = ${instance.objective():.2f}")
 print(f"X units = {instance.x[0].value:.0f}")
 print(f"Y units = {instance.x[1].value:.0f}")
+
+
+cboughe@ncsu.edu
+jebraren@ncsu.edu
+wdbrown3@ncsu.edu
+jaconfer@ncsu.edu
+tmhudso2@ncsu.edu
+smlarson@ncsu.edu
+jlowe3@ncsu.edu
+asrutled@ncsu.edu
+mscruda@ncsu.edu
+gkseitz@ncsu.edu
+dlsinger@ncsu.edu

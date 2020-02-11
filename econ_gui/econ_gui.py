@@ -4,6 +4,7 @@ import PyQt5.QtWidgets as widgets
 import sys
 import os
 import ctypes
+import platform
 
 from econ_ui import Ui_econ_ui
 from econ_for_gui import gui_run, effectivei
@@ -54,13 +55,13 @@ class MyMainScreen(widgets.QDialog):
             if know_index == 0:
                 self.ui.output_info_box.clear()
             if know_index == 1:
-                #cur_mes = unicode(self.ui.output_info_box.text())
+                # cur_mes = unicode(self.ui.output_info_box.text())
                 message = 'That is not a valid capital costs calculation. Please select either "Annual Worth" or "Present Worth" from the "What do you know?" drop down box.'
                 self.ui.output_info_box.append(message)
             if know_index == 2:
                 self.ui.output_info_box.clear()
             if know_index == 3:
-                #cur_mes = unicode(self.ui.output_info_box.text())
+                # cur_mes = unicode(self.ui.output_info_box.text())
                 message = 'That is not a valid capital costs calculation. Please select either "Annual Worth" or "Present Worth" from the "What do you know?" drop down box.'
                 self.ui.output_info_box.append(message)
 
@@ -169,6 +170,10 @@ if __name__ == "__main__":
     mainscreen = MyMainScreen()
     app.setWindowIcon(gui.QIcon('slack.svg'))
     myappid = 'slack.svg'  # arbitrary string
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+    # if "Linux" in platform.platform():
+    #     ctypes.cdll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+    # else:
+    #     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
     mainscreen.show()
     app.exec_()

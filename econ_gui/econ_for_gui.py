@@ -1,101 +1,164 @@
 from __future__ import division
 
-# Single Payment Compound Amount
 
+class EconCalcs(object):
+    def __init__(self, find, have, amount, n, i):
+        self.find = find
+        self.have = have
+        self.amount = amount
+        self.n = n
+        self.i = i
 
-def foverp(p, i, n):
-    f = p * (1 + i)**n
-    return round(f, 2)
+    def update_input(self, find, have, amount, n, i):
+        self.find = find
+        self.have = have
+        self.amount = amount
+        self.n = n
+        self.i = i
 
-# Single Payment Present Worth
+    # Single Payment Compound Amount
 
+    def foverp(self):
+        p, i, n = self.amount, self.i, self.n
+        f = p * (1 + i)**n
+        return f
 
-def poverf(f, i, n):
-    p = f * (1 + i)**(-n)
-    return round(p, 2)
+    # Single Payment Present Worth
 
-# Uniform Series Sinking Fund
+    def poverf(self):
+        f, i, n = self.amount, self.i, self.n
+        p = f * (1 + i)**(-n)
+        return p
 
+    # Uniform Series Sinking Fund
 
-def aoverf(f, i, n):
-    a = (f * i) / ((1 + i)**n - 1)
-    return round(a, 2)
+    def aoverf(self):
+        f, i, n = self.amount, self.i, self.n
+        a = (f * i) / ((1 + i)**n - 1)
+        return a
 
-# capital recovery
+    # capital recovery
 
+    def aoverp(self):
+        p, i, n = self.amount, self.i, self.n
+        a = p * ((i * (1 + i)**n) / ((1 + i)**n - 1))
+        return a
 
-def aoverp(p, i, n):
-    a = p * ((i * (1 + i)**n) / ((1 + i)**n - 1))
-    return round(a, 2)
+    # uniform series compound amount
 
-# uniform series compound amount
+    def fovera(self):
+        a, i, n = self.amount, self.i, self.n
+        f = a * (((1 + i)**n - 1) / i)
+        return f
 
+    # uniform series present worth
 
-def fovera(a, i, n):
-    f = a * (((1 + i)**n - 1) / i)
-    return round(f, 2)
+    def povera(self):
+        a, i, n = self.amount, self.i, self.n
+        p = a * (((1 + i)**n - 1) / (i * (1 + i)**n))
+        return p
 
-# uniform series present worth
+    # uniform gradient present worth
 
+    def poverg(self):
+        g, i, n = self.amount, self.i, self.n
+        factor = ((1 + i)**n - 1) / ((i**2) * (1 + i)**n) - \
+            (n / (i * (1 + i)**n))
+        p = factor * g
+        return p
 
-def povera(a, i, n):
-    p = a * (((1 + i)**n - 1) / (i * (1 + i)**n))
-    return round(p, 2)
+    # uniform gradient future worth
 
-# uniform gradient present worth
+    def foverg(self):
+        g, i, n = self.amount, self.i, self.n
+        factor = (((1 + i)**n - 1) / i**2) - (n / i)
+        f = g * factor
+        return f
 
+    # uniform gradient uniform series
 
-def poverg(g, i, n):
-    factor = ((1 + i)**n - 1) / ((i**2) * (1 + i)**n) - (n / (i * (1 + i)**n))
-    p = factor * g
-    return round(p, 2)
+    def aoverg(self):
+        g, i, n = self.amount, self.i, self.n
+        factor = (1 / i) - (n / ((1 + i)**n - 1))
+        a = g * factor
+        return a
 
-# uniform gradient future worth
+    def goverp(self):
+        amount = self.amount
+        x = self.poverg()
+        x = x / amount
+        x = x**(-1)
+        x = x * amount
+        return x
 
+    def goverf(self):
+        amount = self.amount
+        x = self.foverg()
+        x = x / amount
+        x = x**(-1)
+        x = x * amount
+        return x
 
-def foverg(g, i, n):
-    factor = (((1 + i)**n - 1) / i**2) - (n / i)
-    f = g * factor
-    return round(f, 2)
+    def govera(self):
+        amount = self.amount
+        x = self.aoverg()
+        x = x / amount
+        x = x**(-1)
+        x = x * amount
+        return x
 
-# uniform gradient uniform series
+    # capital costs
 
+    def capcosts(self, choice):
+        amount = self.amount
+        i = self.i
+        if choice == 'P':
+            p = amount / i
+            return p
+        elif choice == 'A':
+            a = amount * i
+            return a
 
-def aoverg(g, i, n):
-    factor = (1 / i) - (n / ((1 + i)**n - 1))
-    a = g * factor
-    return round(a, 2)
+    @property
+    def get_solution(self):
+        func_map = {
+            ("P", "A"): self.povera(),
+            ("P", "F"): self.poverf(),
+            ("P", "G"): self.poverg(),
+            ("F", "A"): self.fovera(),
+            ("F", "P"): self.foverp(),
+            ("F", "G"): self.foverg(),
+            ("A", "F"): self.aoverf(),
+            ("A", "P"): self.aoverp(),
+            ("A", "G"): self.aoverg(),
+            ("G", "P"): self.goverp(),
+            ("G", "F"): self.goverf(),
+            ("G", "A"): self.govera(),
+            ("C", "P"): self.capcosts("A"),
+            ("C", "A"): self.capcosts("P")
+        }
+        return func_map[(self.find, self.have)]
+
 
 # non annual compounding
 
 
-def effectivei(r, m):
+def effectivei(self, r, m):
     i = (1 + r / m)**m - 1
-    return round(i, 4)
-
-# capital costs
-
-
-def capcosts(choice, amount, i):
-    if choice == 'P':
-        p = amount / i
-        return round(p, 2)
-    elif choice == 'A':
-        a = amount * i
-        return round(a, 2)
+    return i
 
 
 def gui_run(find, have, amount, n, i):
     """Main control structure for the gui.
-    Not very robust and should definitely be 
+    Not very robust and should definitely be
     updated but who has time for that?
 
     Arguments:
         find {str} -- ID for what the user is trying to find
-        have {str} -- ID for what the user already has 
+        have {str} -- ID for what the user already has
         amount {float} -- value for the ID specified with 'have'
         n {int} -- compounding periods
-        i {float} -- interest rate 
+        i {float} -- interest rate
 
     Returns:
         float -- calculated value corresponding to the id of 'find'

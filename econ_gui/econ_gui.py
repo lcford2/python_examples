@@ -5,12 +5,10 @@ import sys
 import os
 import ctypes
 import platform
+from IPython import embed as II
 
 from econ_ui import Ui_econ_ui
-from econ_for_gui import gui_run, effectivei
-
-input_info = {'know': '0', 'find': '0', 'amount': '0',
-              'periods': '0', 'rate_type': '0', 'effective': '0'}
+from econ_for_gui import gui_run, EconCalcs, effectivei
 
 
 class MyMainScreen(widgets.QDialog):
@@ -20,6 +18,12 @@ class MyMainScreen(widgets.QDialog):
         self.ui.setupUi(self)
         self.ui.eff_rate_box.hide()
         self.ui.eff_calc_box.hide()
+        self.ui.answer_label.setText("Answer equals ($):")
+
+        self.input_info = {'know': '0', 'find': '0', 'amount': '0',
+                           'periods': '0', 'rate_type': '0', 'effective': '0'}
+
+        self.econ_calcs = EconCalcs(0, 0, 0, 0, 0)
 
         self.ui.find_combo.currentIndexChanged.connect(self.find_combo_change)
         self.ui.know_combo.currentIndexChanged.connect(self.know_combo_change)
@@ -38,12 +42,10 @@ class MyMainScreen(widgets.QDialog):
         self.ui.output_info_box.setTextColor(text_color)
 
     def know_combo_change(self):
-        global input_info
         index = self.ui.know_combo.currentIndex()
-        input_info['know'] = str(index)
+        self.input_info['know'] = str(index)
 
     def error_check(self):
-        global input_info
         know_index = self.ui.know_combo.currentIndex()
         find_index = self.ui.find_combo.currentIndex()
         if know_index == find_index:
@@ -52,16 +54,9 @@ class MyMainScreen(widgets.QDialog):
         else:
             self.ui.output_info_box.clear()
         if find_index == 4:
-            if know_index == 0:
+            if know_index in [0, 2]:
                 self.ui.output_info_box.clear()
-            if know_index == 1:
-                # cur_mes = unicode(self.ui.output_info_box.text())
-                message = 'That is not a valid capital costs calculation. Please select either "Annual Worth" or "Present Worth" from the "What do you know?" drop down box.'
-                self.ui.output_info_box.append(message)
-            if know_index == 2:
-                self.ui.output_info_box.clear()
-            if know_index == 3:
-                # cur_mes = unicode(self.ui.output_info_box.text())
+            if know_index in [1, 3]:
                 message = 'That is not a valid capital costs calculation. Please select either "Annual Worth" or "Present Worth" from the "What do you know?" drop down box.'
                 self.ui.output_info_box.append(message)
 
@@ -80,44 +75,37 @@ class MyMainScreen(widgets.QDialog):
     def change_label(self):
         label = self.ui.amount_label
         know_index = self.ui.know_combo.currentIndex()
-        new_label = "Enter the present worth:"
-        if str(know_index) == '0':
-            new_label = "Enter the present worth:"
-        elif str(know_index) == '1':
-            new_label = "Enter the future worth:"
-        elif str(know_index) == '2':
-            new_label = "Enter the annual worth:"
-        elif str(know_index) == '3':
-            new_label = "Enter the gradient amount:"
+        label_map = {"0": "Enter the present worth:",
+                     "1": "Enter for future worth:",
+                     "2": "Enter the annual worth:",
+                     "3": "Enter the gradient amount:"}
+        new_label = label_map.get(str(know_index), "Error")
         label.setText(new_label)
 
     def find_combo_change(self):
-        global input_info
         index = self.ui.find_combo.currentIndex()
-        input_info['find'] = str(index)
+        self.input_info['find'] = str(index)
 
     def rate_radio_change(self):
-        global input_info
         if self.ui.effective_radio.isChecked() == True:
-            input_info['rate_type'] = 'effective'
+            self.input_info['rate_type'] = 'effective'
             self.ui.eff_calc_box.hide()
             self.ui.eff_rate_box.show()
         elif self.ui.nominal_radio.isChecked() == True:
-            input_info['rate_type'] = 'nominal'
+            self.input_info['rate_type'] = 'nominal'
             self.ui.eff_calc_box.show()
             self.ui.eff_rate_box.hide()
 
     def get_info(self):
-        global input_info
         amount = self.ui.amount_edit.text()
         amount = amount.replace(',', '')
         periods = self.ui.period_edit.text()
-        if input_info['rate_type'] == 'effective':
-            input_info['effective'] = self.ui.rate_edit.text()
-        elif input_info['rate_type'] == 'nominal':
-            input_info['effective'] = self.ui.eff_rate_edit.text()
-        input_info['amount'] = str(amount)
-        input_info['periods'] = str(periods)
+        if self.input_info['rate_type'] == 'effective':
+            self.input_info['effective'] = self.ui.rate_edit.text()
+        elif self.input_info['rate_type'] == 'nominal':
+            self.input_info['effective'] = self.ui.eff_rate_edit.text()
+        self.input_info['amount'] = str(amount)
+        self.input_info['periods'] = str(periods)
         self.calc_values()
 
     def effective_calc(self):
@@ -128,52 +116,34 @@ class MyMainScreen(widgets.QDialog):
             r = float(r)
             m = float(m)
             effective_rate = effectivei(r, m)
-            self.ui.eff_rate_edit.setText(str(effective_rate))
+            self.ui.eff_rate_edit.setText(f"{effective_rate: .4f}")
         except:
             pass
 
     def calc_values(self):
-        global input_info
         have = 0
         find = 0
-        if input_info['find'] == '0':
-            find = 'P'
-        elif input_info['find'] == '1':
-            find = 'F'
-        elif input_info['find'] == '2':
-            find = 'A'
-        elif input_info['find'] == '3':
-            find = 'G'
-        elif input_info['find'] == '4':
-            find = 'C'
-        if input_info['know'] == '0':
-            have = 'P'
-        elif input_info['know'] == '1':
-            have = 'F'
-        elif input_info['know'] == '2':
-            have = 'A'
-        elif input_info['know'] == '3':
-            have = 'G'
-        amount = float(input_info['amount'])
+        find_map = {"0": "P", "1": "F", "2": "A", "3": "G", "4": "C"}
+        have_map = {"0": "P", "1": "F", "2": "A", "3": "G"}
+        find = find_map[self.input_info["find"]]
+        have = have_map[self.input_info["know"]]
+        amount = float(self.input_info['amount'])
         if find == 'C':
             periods = 0
         else:
-            periods = float(input_info['periods'])
-        rate = float(input_info['effective'])
-        result = gui_run(find, have, amount, periods, rate)
-        self.ui.answer_edit.setText('{:,}'.format(result))
+            periods = float(self.input_info['periods'])
+        rate = float(self.input_info['effective'])
+        self.econ_calcs.update_input(find, have, amount, periods, rate)
+        result = self.econ_calcs.get_solution
+        # result = gui_run(find, have, amount, periods, rate)
+        self.ui.answer_edit.setText(f'{result:,.2f}')
 
 
 if __name__ == "__main__":
     app = widgets.QApplication(sys.argv)
     screen_res = app.desktop().screenGeometry()
     mainscreen = MyMainScreen()
-    app.setWindowIcon(gui.QIcon('slack.svg'))
-    myappid = 'slack.svg'  # arbitrary string
-    # if "Linux" in platform.platform():
-    #     ctypes.cdll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
-    # else:
-    #     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
-
+    # Icon made by "https://www.flaticon.com/authors/surang"
+    app.setWindowIcon(gui.QIcon('cost.png'))
     mainscreen.show()
     app.exec_()

@@ -1,3 +1,4 @@
 gsheets/credentials.json
 gsheets/token.pickle
 gsheets/apisheet.gsheet
+.vscode

@@ -122,28 +122,32 @@ class EconCalcs(object):
     @property
     def get_solution(self):
         func_map = {
-            ("P", "A"): self.povera(),
-            ("P", "F"): self.poverf(),
-            ("P", "G"): self.poverg(),
-            ("F", "A"): self.fovera(),
-            ("F", "P"): self.foverp(),
-            ("F", "G"): self.foverg(),
-            ("A", "F"): self.aoverf(),
-            ("A", "P"): self.aoverp(),
-            ("A", "G"): self.aoverg(),
-            ("G", "P"): self.goverp(),
-            ("G", "F"): self.goverf(),
-            ("G", "A"): self.govera(),
-            ("C", "P"): self.capcosts("A"),
-            ("C", "A"): self.capcosts("P")
+            ("P", "A"): self.povera,
+            ("P", "F"): self.poverf,
+            ("P", "G"): self.poverg,
+            ("F", "A"): self.fovera,
+            ("F", "P"): self.foverp,
+            ("F", "G"): self.foverg,
+            ("A", "F"): self.aoverf,
+            ("A", "P"): self.aoverp,
+            ("A", "G"): self.aoverg,
+            ("G", "P"): self.goverp,
+            ("G", "F"): self.goverf,
+            ("G", "A"): self.govera,
         }
-        return func_map[(self.find, self.have)]
+
+        if self.find == "C":
+            if self.have == 'P':
+                return self.capcosts('A')
+            elif self.have == 'A':
+                return self.capcosts('P')
+        return func_map[(self.find, self.have)]()
 
 
 # non annual compounding
 
 
-def effectivei(self, r, m):
+def effectivei(r, m):
     i = (1 + r / m)**m - 1
     return i
 

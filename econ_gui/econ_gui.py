@@ -128,6 +128,7 @@ class MyMainScreen(widgets.QDialog):
         find = find_map[self.input_info["find"]]
         have = have_map[self.input_info["know"]]
         amount = float(self.input_info['amount'])
+
         if find == 'C':
             periods = 0
         else:

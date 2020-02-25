@@ -1,28 +1,8 @@
 # %%
-import sys
-try:
-    import pandas as pd
-except ModuleNotFoundError as e:
-    print("##### conda install pandas #####")
-    sys.exit()
-
-try:
-    import matplotlib.pyplot as plt
-except ModuleNotFoundError as e:
-    print("##### conda install matplotlib #####")
-    sys.exit()
-
-try:
-    import numpy as np
-except ModuleNotFoundError as e:
-    print("##### conda install numpy #####")
-    sys.exit()
-
-try:
-    import seaborn as sns  # heatmap
-except ModuleNotFoundError as e:
-    print("##### conda install seaborn #####")
-    sys.exit()
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns  # heatmap
 
 # %%
 df = pd.read_csv("./electric-flow-data.csv")
@@ -73,12 +53,10 @@ print(df)
 # %%
 # I know that streamflow follows a log normal distribution,
 # so I am going to add a column with log transformed s-flow
-# Going ahead and computing the log for demand as well
 df["ln_sFlow"] = np.log(df["sFlow"])
-df["ln_dem"] = np.log(df["dem"])
 
 # %%
-# I believe sflow and demand exhibit lag1 autocorrelation
+# I believe sflow exhibit lag1 autocorrelation
 # I am going to test this now
 print("Streamflow Lag 1 Autocorrelation : {:.3f}".format(
     df["ln_sFlow"].autocorr(1)))
@@ -117,17 +95,11 @@ plt.show()
 # %%
 # import various linear regression options
 # scikit learn
-try:
-    from sklearn.linear_model import LinearRegression
-except ModuleNotFoundError as e:
-    print("##### conda install sklearn #####")
+from sklearn.linear_model import LinearRegression
 
 # statsmodels
-try:
-    import statsmodels.api as sm
-    import statsmodels.formula.api as smf
-except ModuleNotFoundError as e:
-    print("##### conda install statsmodels #####")
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
 
 # %%
 # get sflow arrays
@@ -187,13 +159,8 @@ plt.show()
 
 
 # %%
-try:
-    from sklearn import svm
-except ModuleNotFoundError as e:
-    print("##### conda install sklearn #####")
 # Support vector regression
-# Another simple method that can be more accurate
-# than OLS regression
+from sklearn import svm
 
 svr_mod = svm.SVR()
 svr_mod.fit(sflow_params, sflow)

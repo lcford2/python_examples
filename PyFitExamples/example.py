@@ -29,14 +29,46 @@ df = pd.read_csv("./electric-flow-data.csv")
 
 # %%
 # check the data out
-print(df.head())
+print(df)
 
 # %%
 # date is stored as a string, want to convert to datetime type
 df["date"] = pd.to_datetime(df["date"])
+df = df.set_index("date")
 
-# datetime indices allow for the df to be resampled to
-# various temporal scales
+# %% Read in ENSO data and append to df
+enso = pd.read_csv("./nino3_4.txt", index_col=0,
+                   header=None, delim_whitespace=True)
+# Unstack and manipulate indexing
+enso = enso.transpose().unstack()
+new_index = [f"{month}-{int(year)}" for year, month in enso.index]
+enso.index = pd.to_datetime(new_index)
+
+# %%
+# check the data out
+print(enso)
+
+# %%
+# Calculate Nino3.4 SST Anomaly index
+mean_sst = enso.mean()
+enso_anom = enso - mean_sst
+nino34_index = enso_anom.rolling(3).mean()
+
+
+def convert_to_cat(x):
+    if x < -0.5:
+        return "LaNina"
+    elif x > 0.5:
+        return "ElNino"
+    else:
+        return "Normal"
+
+
+df["Nino34_Index"] = nino34_index.apply(convert_to_cat)
+
+# %%
+# check the data out
+print(df)
 
 # %%
 # I know that streamflow follows a log normal distribution,
@@ -49,18 +81,21 @@ df["ln_dem"] = np.log(df["dem"])
 # I believe sflow and demand exhibit lag1 autocorrelation
 # I am going to test this now
 print("Streamflow Lag 1 Autocorrelation : {:.3f}".format(
-    df["sFlow"].autocorr(1)))
-print("Demand Lag 1 Autocorrelation : {:.3f}".format(df["dem"].autocorr(1)))
+    df["ln_sFlow"].autocorr(1)))
+print("Demand Lag 1 Autocorrelation : {:.3f}".format(df["ln_dem"].autocorr(1)))
 
 # %%
 # I know I want to include the lag correlation between
 # demand and streamflow in my model. I am going to
-# lag both variables and then drop the first row
-# (first row doesnt have a preceding value)
+# lag both variables
 df["lag1_sFlow"] = df["sFlow"].shift(1)
 df["lag1_ln_sFlow"] = df["ln_sFlow"].shift(1)
 df["lag1_dem"] = df["dem"].shift(1)
 df["lag1_ln_dem"] = df["ln_dem"].shift(1)
+# Since I am considering Nino3.4 Index, I need to consider when it will affect
+# the modeled area. I know that there is in general a three month lag correlation
+# between the SE US precipitation and Nino3.4 SST
+df["Nino34_Index"] = df["Nino34_Index"].shift(3)
 df = df.dropna()
 
 # %%
@@ -90,6 +125,7 @@ except ModuleNotFoundError as e:
 # statsmodels
 try:
     import statsmodels.api as sm
+    import statsmodels.formula.api as smf
 except ModuleNotFoundError as e:
     print("##### conda install statsmodels #####")
 
@@ -100,17 +136,23 @@ sflow = df["ln_sFlow"]
 
 # %% FITTING MODEL
 # Statsmodels
+# statsmodels expects a column of ones at the front of the matrix
+# if you are going to include an intercept, the 'add_constant'
+# method here appends that column for you
 sflow_params_c = sm.add_constant(sflow_params)
-model = sm.OLS(sflow, sflow_params_c)
-results = model.fit()
-statsmodel_preds = results.predict()
+# Ordinary Least Squares
+results = sm.OLS(sflow, sflow_params_c).fit()
+statsmodel_preds_1 = results.predict()
 
-print("STATSMODELS")
+
 print(results.summary())
-print("Rsq          = ", results.rsquared)
-print("Intercept    = ", results.params[0])
-print("Beta_1(P)    = ", results.params[1])
-print("Beta_2(lg1S) = ", results.params[2])
+
+# %% Fit model similar to R, include temperature
+results = smf.ols(
+    "ln_sFlow ~ precip + temp + lag1_ln_sFlow + C(Nino34_Index) + precip:lag1_ln_sFlow - 1",
+    data=df).fit()
+statsmodel_preds_2 = results.predict()
+print(results.summary())
 
 # %% FITTING MODEL
 # sklearn
@@ -125,12 +167,13 @@ print("Intercept    = ", intercept)
 print("Beta_1(P)    = ", model.coef_[0])
 print("Beta_2(lg1S) = ", model.coef_[1])
 
+
 # %%
 # plot all results
 # create subplots
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4))
 # plot statsmodels results
-ax1.plot(sflow, statsmodel_preds, 'ro', label="Preds vs. Actual")
+ax1.plot(sflow, statsmodel_preds_1, 'ro', label="Preds vs. Actual")
 ax1.set_xlabel("Actual", fontsize=16)
 ax1.set_ylabel("Predicted", fontsize=16)
 ax1.set_title("Statsmodels", fontsize=18)

@@ -7,14 +7,14 @@ from google.auth.transport.requests import Request
 import numpy as np
 from scipy.stats import norm
 
-# Everytime you modify the scopes you need to delete the token.pickle file
+# * Everytime you modify the scopes you need to delete the token.pickle file
 # Scopes define the permissions
 # Can read more about scopes @ https://developers.google.com/sheets/api/guides/authorizing
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 # get the id from the url
-# https://docs.google.com/spreadsheets/d/<GSHEET_ID>/edit#gid=0
-
+# * https://docs.google.com/spreadsheets/d/<GSHEET_ID>/edit#gid=0
+# TODO: You will need to update this with your own sheet prior to using this code
 GSHEET_ID = "1-tQcG0mf7XZTTNdtLXZ24hu-o-NTzPZ0Sh2Ghl6Uy2A"
 
 

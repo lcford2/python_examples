@@ -30,7 +30,7 @@ To run the interface, execure the following commands from the command line in th
     `python econ_gui.py`  
 
 ### Fitting linear models to data and plotting results with Python
-The code for this example is under the PyFitExamples folder.
+The code for this example is under the py_fit_example folder.
 If you have installed python through anaconda, the packages required in this example will already be installed. 
 This code can be run with an interactive interpreter in Visual Studio Code (VS Code) or exectuted from the command line.
 If ran from the command line there will be a lot of output. 

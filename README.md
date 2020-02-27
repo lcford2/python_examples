@@ -58,6 +58,9 @@ This can be useful in many scenarios including:
 
 This example goes through the process of generating data and pushing it to your google sheet.
 
+### Open Weather API Example
+This example pulls 5-day 4-hour forecasted weather data from the Open Weather API and then plots temperature, feels like temperature, and humidity. It serves to demonstrate the ease at which one may pull data from websites if they provide a web API. The `requests` package used here can be used for many other purposes, for example web scraping data that is posted as text files on the internet (e.g. USGS). There are directions for obtaining the API key required for these example in the README.md file in the example folder. 
+
 ### Itertools examples
 In the itertools_ex folder there is an example of `cycle`. Cycle is a Python function that creates an endless iterator of its input. 
 In this example it is used to create a waiting spinner, however it has many more practical uses. 

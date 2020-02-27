@@ -7,9 +7,12 @@ It is best to install Python 3 rather than 2 because 2 will no longer be support
 
 ### Using `ctypes` to interface with C and Fortran from Python
 The code for this example is under the ctypes_ex folder. 
-The shared objects (.so files) were compiled with intel compiler in a linux environment.
-If you plan to use this with other compilers update the makefile. 
-If you are planning to use this in a windows environment you will need to follow the same basic structure of the makefile, but using specific compiler directives to get a .dll instead of an .so.
+Intel compilers were used to create the linux and windows libraries (x64 architecture). 
+
+In linux, the librarys are called shared objects and have a `.so` extension. The `makefile` shows how the libraries were compiled. 
+
+In windows, the librarys are called dynamically linked libraries (DLL) and have a `.dll` extension. There are instructions in the README.md file that explain how the DLLs were compiled. 
+
 
 The python packages required for this example are:  
 - ctypes 

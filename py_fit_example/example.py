@@ -19,6 +19,9 @@ df = df.set_index("date")
 # %% Read in ENSO data and append to df
 enso = pd.read_csv("./nino3_4.txt", index_col=0,
                    header=None, delim_whitespace=True)
+print(enso)
+
+# %%
 # Unstack and manipulate indexing
 enso = enso.transpose().unstack()
 new_index = [f"{month}-{int(year)}" for year, month in enso.index]
@@ -60,7 +63,6 @@ df["ln_sFlow"] = np.log(df["sFlow"])
 # I am going to test this now
 print("Streamflow Lag 1 Autocorrelation : {:.3f}".format(
     df["ln_sFlow"].autocorr(1)))
-print("Demand Lag 1 Autocorrelation : {:.3f}".format(df["ln_dem"].autocorr(1)))
 
 # %%
 # I know I want to include the lag correlation between
@@ -68,8 +70,6 @@ print("Demand Lag 1 Autocorrelation : {:.3f}".format(df["ln_dem"].autocorr(1)))
 # lag both variables
 df["lag1_sFlow"] = df["sFlow"].shift(1)
 df["lag1_ln_sFlow"] = df["ln_sFlow"].shift(1)
-df["lag1_dem"] = df["dem"].shift(1)
-df["lag1_ln_dem"] = df["ln_dem"].shift(1)
 # Since I am considering Nino3.4 Index, I need to consider when it will affect
 # the modeled area. I know that there is in general a three month lag correlation
 # between the SE US precipitation and Nino3.4 SST
@@ -98,12 +98,12 @@ plt.show()
 from sklearn.linear_model import LinearRegression
 
 # statsmodels
-import statsmodels.api as sm
-import statsmodels.formula.api as smf
+import statsmodels.api as sm  # matrix form
+import statsmodels.formula.api as smf  # similar to R
 
 # %%
 # get sflow arrays
-sflow_params = df[["precip", "lag1_ln_sFlow"]]
+sflow_params = df[["precip", "lag1_ln_sFlow", "temp"]]
 sflow = df["ln_sFlow"]
 
 # %% FITTING MODEL

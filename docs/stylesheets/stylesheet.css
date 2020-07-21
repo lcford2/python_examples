@@ -51,7 +51,12 @@ a {
     font-size: 0.9rem; }
     .btn + .btn {
       margin-top: 1rem;
-      margin-left: 0; } }
+      margin-left: 0; }
+  li {
+    display: block;
+    width: 100%;
+    padding: 0.5rem; 
+    text-align: center;}}
 
 .page-header {
   color: #fff;

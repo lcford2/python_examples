@@ -1,105 +1,186 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Python examples by lcford2</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/menu_style.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Python examples</h1>
-      <h2 class="project-tagline">A collection of python examples that showcase some libraries and practical functions of Python. </h2>
-      <a href="https://github.com/lcford2/python_examples" class="btn">View on GitHub</a>
-      <a href="https://github.com/lcford2/python_examples/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/lcford2/python_examples/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<html>
 
-    <section class="main-content">
-      <ul>
-        <li><a href="https://lcford2.github.io">Home</a></li>
-        <li><a href="https://lcford2.github.io/graps_gui">GRAPS GUI</a></li>
-        <li><a class="active" href="https://lcford2.github.io/python_examples">Python Examples</a></li>
-        <li><a href="http://lucasford.wordpress.ncsu.edu/">About</a></li>
-      </ul>
-      <h1>
-<a id="python-examples" class="anchor" href="#python-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python Examples</h1>
-<h3>
-<a id="python-installation-to-use-these-examples" class="anchor" href="#python-installation-to-use-these-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python installation to use these examples</h3>
-<p>These examples require several python packages that are included in the basic anaconda installation.
-To install anaconda for your platform, you can go the <a href="https://www.anaconda.com/distribution/">Anaconda Download</a>.
-It is best to install Python 3 rather than 2 because 2 will no longer be supported after January 1st, 2020.</p>
-<h3>
-<a id="using-ctypes-to-interface-with-c-and-fortran-from-python" class="anchor" href="#using-ctypes-to-interface-with-c-and-fortran-from-python" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using <code>ctypes</code> to interface with C and Fortran from Python</h3>
-<p>The code for this example is under the ctypes_ex folder.
-Intel compilers were used to create the linux and windows libraries (x64 architecture).</p>
-<p>In linux, the librarys are called shared objects and have a <code>.so</code> extension. The <code>makefile</code> shows how the libraries were compiled.</p>
-<p>In windows, the librarys are called dynamically linked libraries (DLL) and have a <code>.dll</code> extension. There are instructions in the README.md file that explain how the DLLs were compiled.</p>
-<p>The python packages required for this example are:</p>
-<ul>
-<li>ctypes</li>
-<li>numpy</li>
-<li>time</li>
-</ul>
-<h3>
-<a id="using-pyqt5-to-make-a-simple-gui-in-python" class="anchor" href="#using-pyqt5-to-make-a-simple-gui-in-python" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using <code>PyQt5</code> to make a simple GUI in Python</h3>
-<p>The code for this example is under the econ_gui folder.
-This folder contains an <code>environment.yml</code> file that can be used to create a conda environment suitable for this example.
-To create the environment, type the following into your command line from the econ_gui directory:<br>
-<code>conda env create -f environment.yml</code></p>
-<p>To run the interface, execure the following commands from the command line in the econ_gui directory:<br>
-<code>conda activate qt-env</code><br>
-<code>python econ_gui.py</code></p>
-<h3>
-<a id="fitting-linear-models-to-data-and-plotting-results-with-python" class="anchor" href="#fitting-linear-models-to-data-and-plotting-results-with-python" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fitting linear models to data and plotting results with Python</h3>
-<p>The code for this example is under the py_fit_example folder.
-If you have installed python through anaconda, the packages required in this example will already be installed.
-This code can be run with an interactive interpreter in Visual Studio Code (VS Code) or exectuted from the command line.
-If ran from the command line there will be a lot of output.</p>
-<h3>
-<a id="optimization---building-algebraic-models-in-python-using-pyomo" class="anchor" href="#optimization---building-algebraic-models-in-python-using-pyomo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Optimization - Building algebraic models in Python using Pyomo</h3>
-<p>The code for this example is under the pyomo_opt folder.
-Pyomo is a Python library built and maintained at Sandia National Labs.
-It is designed to allow users to create optimization models with python code and pyomo classes.
-I have used this extensively and it is a very popular, powerful package. It will interface with most commercial and open source solvers.
-The <code>mixed_product.dat</code> file contains the data read in by the abstract model created by the <code>mixed_product_func.py</code>.
-The <code>mixed_product.py</code> file creates and solves a concrete model that does not need a data file.
-To use this example you will need to have a mathematical solver installed. These files assume that Gurobi is installed and available for use.
-You will also need to install pyomo using the following command:<br>
-<code>conda install pyomo</code></p>
-<h3>
-<a id="using-google-sheets-api-to-automatically-create-visualizations" class="anchor" href="#using-google-sheets-api-to-automatically-create-visualizations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using Google Sheets API to Automatically Create Visualizations</h3>
-<p>The code for this example is under the gsheets folder.</p>
-<p>You can use the environment YAML file to create a conda environment to run this code similar to the one in the PyQt5 section.</p>
-<p>Google provides a python api to Google Sheets. This api allows users to read, write, and update spreadsheets from python.
-This can be useful in many scenarios including:</p>
-<ul>
-<li>storing data when you do not want to use a database or do not want to store it locally</li>
-<li>creating visualization dashboards that automatically update</li>
-<li>automatically sharing data with others</li>
-</ul>
-<p>This example goes through the process of generating data and pushing it to your google sheet.</p>
-<h3>
-<a id="open-weather-api-example" class="anchor" href="#open-weather-api-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Open Weather API Example</h3>
-<p>This example pulls 5-day 4-hour forecasted weather data from the Open Weather API and then plots temperature, feels like temperature, and humidity. It serves to demonstrate the ease at which one may pull data from websites if they provide a web API. The <code>requests</code> package used here can be used for many other purposes, for example web scraping data that is posted as text files on the internet (e.g. USGS). There are directions for obtaining the API key required for these example in the README.md file in the example folder.</p>
-<h3>
-<a id="itertools-examples" class="anchor" href="#itertools-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Itertools examples</h3>
-<p>In the itertools_ex folder there is an example of <code>cycle</code>. Cycle is a Python function that creates an endless iterator of its input.
-In this example it is used to create a waiting spinner, however it has many more practical uses.
-I plan to continue to update this folder with itertools examples because they unlock some really interesting functionality of Python.</p>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/lcford2/python_examples">Python examples</a> is maintained by <a href="https://github.com/lcford2">lcford2</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" href="stylesheets/github-dark.css">
+  <link rel="stylesheet" href="stylesheets/menu_style.css">
   
-  </body>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <link rel="stylesheet" href="javascripts/highlight/styles/monokai-sublime.css">
+  <script src="javascripts/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <title>Python examples</title>
+  <meta name="description"
+    content="A collection of python examples that showcase some libraries and practical functions of Python. ">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Python examples</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">A collection of python examples that showcase some libraries and practical functions of Python.
+      </p>
+      <div id="main" role="main">
+        <div class="download-bar">
+          <div class="inner">
+            <a href="https://github.com/lcford2/python_examples/tarball/master"
+              class="download-button tar"><span>.tar.gz</span></a>
+            <a href="https://github.com/lcford2/python_examples/zipball/master"
+              class="download-button zip"><span>.zip</span></a>
+            <ul class="bar">
+              <li class="bar"><a href="https://lcford2.github.io">Home</a></li>
+              <li class="bar"><a href="https://lcford2.github.io/graps_gui">GRAPS GUI</a></li>
+              <li class="bar"><a class="active" href="https://lcford2.github.io/python_examples">Python Examples</a>
+              </li>
+              <li class="bar"><a href="http://lucasford.wordpress.ncsu.edu/">About</a></li>
+            </ul>
+          </div>
+          <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
+            <a id="python-examples" class="anchor" href="#python-examples" aria-hidden="true"><span aria-hidden="true"
+                class="octicon octicon-link"></span></a>Python Examples</h1>
+          <h3>
+            <a id="python-installation-to-use-these-examples" class="anchor"
+              href="#python-installation-to-use-these-examples" aria-hidden="true"><span aria-hidden="true"
+                class="octicon octicon-link"></span></a>Python installation to use these examples</h3>
+          <p>These examples require several python packages that are included in the basic anaconda installation.
+            To install anaconda for your platform, you can go to the <a
+              href="https://www.anaconda.com/distribution/">Anaconda Download's</a> page.
+            It is best to install Python 3 rather than 2 because Python 2 is no longer supported</p>
+          <h3>
+            <a id="using-ctypes-to-interface-with-c-and-fortran-from-python" class="anchor"
+              href="#using-ctypes-to-interface-with-c-and-fortran-from-python" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Using <code>ctypes</code> to interface with C
+            and Fortran from Python</h3>
+          <p>The code for this example is under the ctypes_ex folder.
+            Intel compilers were used to create the linux and windows libraries (x64 architecture).</p>
+          <p>In linux, the librarys are called shared objects and have a <code>.so</code> extension. The
+            <code>makefile</code> shows how the libraries were compiled.</p>
+          <p>In windows, the librarys are called dynamically linked libraries (DLL) and have a <code>.dll</code>
+            extension. There are instructions in the README.md file that explain how the DLLs were compiled.</p>
+          <p>The python packages required for this example are:</p>
+          <ul>
+            <li>ctypes</li>
+            <li>numpy</li>
+            <li>time</li>
+          </ul>
+          <h3>
+            <a id="using-pyqt5-to-make-a-simple-gui-in-python" class="anchor"
+              href="#using-pyqt5-to-make-a-simple-gui-in-python" aria-hidden="true"><span aria-hidden="true"
+                class="octicon octicon-link"></span></a>Using <code>PyQt5</code> to make a simple GUI in Python</h3>
+          <p>The code for this example is under the econ_gui folder.
+            This folder contains an <code>environment.yml</code> file that can be used to create a conda environment
+            suitable for this example.
+            To create the environment, type the following into your command line from the econ_gui directory:</p>
+          <pre class="lines"><code class="shell">$ conda env create -f environment.yml</code></pre>
+          <p>To run the interface, execure the following commands from the command line in the econ_gui directory:<br>
+            <pre><code class="shell">$ conda activate qt-env</code></pre><br>
+            <pre><code class="shell">$ python econ_gui.py</code></pre></p>
+          <h3>
+            <a id="fitting-linear-models-to-data-and-plotting-results-with-python" class="anchor"
+              href="#fitting-linear-models-to-data-and-plotting-results-with-python" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Fitting linear models to data and plotting
+            results with Python</h3>
+          <p>The code for this example is under the py_fit_example folder.
+            If you have installed python through anaconda, the packages required in this example will already be
+            installed.
+            This code can be run with an interactive interpreter in Visual Studio Code (VS Code) or exectuted from the
+            command line.
+            If ran from the command line there will be a lot of output.</p>
+          <h3>
+            <a id="optimization---building-algebraic-models-in-python-using-pyomo" class="anchor"
+              href="#optimization---building-algebraic-models-in-python-using-pyomo" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Optimization - Building algebraic models in
+            Python using Pyomo</h3>
+          <p>The code for this example is under the pyomo_opt folder.
+            Pyomo is a Python library built and maintained at Sandia National Labs.
+            It is designed to allow users to create optimization models with python code and pyomo classes.
+            I have used this extensively and it is a very popular, powerful package. It will interface with most
+            commercial and open source solvers.
+            The <code>mixed_product.dat</code> file contains the data read in by the abstract model created by the
+            <code>mixed_product_func.py</code>.
+            The <code>mixed_product.py</code> file creates and solves a concrete model that does not need a data file.
+            To use this example you will need to have a mathematical solver installed. These files assume that Gurobi is
+            installed and available for use.
+            You will also need to install pyomo using the following command:<br>
+            <pre><code class="shell">$ conda install pyomo</code></pre></p>
+          <h3>
+            <a id="using-google-sheets-api-to-automatically-create-visualizations" class="anchor"
+              href="#using-google-sheets-api-to-automatically-create-visualizations" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Using Google Sheets API to Automatically
+            Create Visualizations</h3>
+          <p>The code for this example is under the gsheets folder.</p>
+          <p>You can use the environment YAML file to create a conda environment to run this code similar to the one in
+            the PyQt5 section.</p>
+          <p>Google provides a python api to Google Sheets. This api allows users to read, write, and update
+            spreadsheets from python.
+            This can be useful in many scenarios including:</p>
+          <ul>
+            <li>storing data when you do not want to use a database or do not want to store it locally</li>
+            <li>creating visualization dashboards that automatically update</li>
+            <li>automatically sharing data with others</li>
+          </ul>
+          <p>This example goes through the process of generating data and pushing it to your google sheet.</p>
+          <h3>
+            <a id="open-weather-api-example" class="anchor" href="#open-weather-api-example" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Open Weather API Example</h3>
+          <p>This example pulls 5-day 4-hour forecasted weather data from the Open Weather API and then plots
+            temperature, feels like temperature, and humidity. It serves to demonstrate the ease at which one may pull
+            data from websites if they provide a web API. The <code>requests</code> package used here can be used for
+            many other purposes, for example web scraping data that is posted as text files on the internet (e.g. USGS).
+            There are directions for obtaining the API key required for these example in the README.md file in the
+            example folder.</p>
+          <h3>
+            <a id="itertools-examples" class="anchor" href="#itertools-examples" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Itertools examples</h3>
+          <p>In the itertools_ex folder there is an example of <code>cycle</code>. Cycle is a Python function that
+            creates an endless iterator of its input.
+            In this example it is used to create a waiting spinner, however it has many more practical uses.
+            I plan to continue to update this folder with itertools examples because they unlock some really interesting
+            functionality of Python.</p>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+        <p><a href="https://github.com/lcford2" class="avatar"><img
+              src="https://avatars0.githubusercontent.com/u/49534025?s=60&amp;v=4" width="48" height="48"></a> <a
+            href="https://github.com/lcford2">lcford2</a> maintains <a
+            href="https://github.com/lcford2/python_examples">Python examples</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a
+            href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/lcford2/python_examples/tarball/master" class="tar">tar</a><a
+      href="https://github.com/lcford2/python_examples/zipball/master" class="zip">zip</a><a href="" class="code">source
+      code</a>
+    <p class="name"></p>
+  </div>
+
+</body>
+
 </html>

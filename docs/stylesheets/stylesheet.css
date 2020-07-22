@@ -770,9 +770,9 @@ footer .owner p a {
   font-size: 16px;
 }
 
-.markdown-body pre {
-  padding: 10px 70px 10px 0;
-  margin-left: -20px;
+/* .markdown-body pre { */
+  /* padding: 10px 70px 10px 0; */
+  /* margin-left: -20px;
   margin-right: -20px;
   font-family: 'Monaco', 'Lucida Console', monospace;
   font-size: 13px;
@@ -793,7 +793,7 @@ footer .owner p a {
   box-shadow: none;
   background-color:#2a2a2a;
   color: #d6d6d6;
-}
+} */
 
 .markdown-body ul,
 .markdown-body ol {
@@ -816,9 +816,9 @@ footer .owner p a {
 }
 
 .markdown-body li pre,
-.markdown-body li pre.lines,
-.markdown-body dd pre,
-.markdown-body dd pre.lines {
+/* .markdown-body li pre.lines, */
+/* .markdown-body dd pre.lines  */
+.markdown-body dd pre {
   margin-left: -35px;
 }
 

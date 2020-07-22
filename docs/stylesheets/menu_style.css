@@ -1,5 +1,5 @@
 
-ul {
+ul.bar {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -9,11 +9,11 @@ ul {
     position: relative;
 }
 
-li {
+li.bar {
     float: left;
 }
 
-li a {
+li.bar a {
     display: inline-block;
     color: white;
     text-align: center;
@@ -21,13 +21,13 @@ li a {
     text-decoration: none;
 }
 
-li a:hover {
+li.bar a:hover {
     background-color: #159957;
     text-decoration: none;
     
 }
 
-li a:hover:not(.active) {
+li.bar a:hover:not(.active) {
     background-color: #111;
 }
 

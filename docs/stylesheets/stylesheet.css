@@ -731,7 +731,7 @@ footer .owner p a {
 .markdown-body h5,
 .markdown-body h6,
 .markdown-body p,
-.markdown-body pre,
+/* .markdown-body pre, */
 .markdown-body ul,
 .markdown-body ol,
 .markdown-body dl,
@@ -770,9 +770,9 @@ footer .owner p a {
   font-size: 16px;
 }
 
-/* .markdown-body pre { */
-  /* padding: 10px 70px 10px 0; */
-  /* margin-left: -20px;
+/* .markdown-body pre {
+  padding: 10px 70px 10px 0;
+  margin-left: -20px;
   margin-right: -20px;
   font-family: 'Monaco', 'Lucida Console', monospace;
   font-size: 13px;
@@ -781,19 +781,19 @@ footer .owner p a {
   word-wrap: break-word;
   background-color:#3b3b3b;
   color: #d6d6d6;
-}
+} */
 
 .markdown-body pre.lines {
   font-size: 12px;
   margin:0 10px 0 -20px;
   padding: 10px;
   float:  left;
-  display: block;
+  display: none;
   text-align: right;
   box-shadow: none;
   background-color:#2a2a2a;
   color: #d6d6d6;
-} */
+}
 
 .markdown-body ul,
 .markdown-body ol {
@@ -815,12 +815,12 @@ footer .owner p a {
   margin-bottom: 10px;
 }
 
-.markdown-body li pre,
-/* .markdown-body li pre.lines, */
-/* .markdown-body dd pre.lines  */
+/* .markdown-body li pre,
+.markdown-body li pre.lines,
+.markdown-body dd pre.lines 
 .markdown-body dd pre {
   margin-left: -35px;
-}
+} */
 
 .markdown-body dt {
   font-weight: bold;

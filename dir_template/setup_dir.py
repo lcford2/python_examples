@@ -3,6 +3,11 @@ import pathlib
 import json
 
 def parse_args():
+    """Argument parsing function
+
+    :return: namespace containing user provided arguments
+    :rtype: argparse.Namespace
+    """
     parser = argparse.ArgumentParser(
         description="Setup a directory from a template."
     )
@@ -22,11 +27,28 @@ def parse_args():
     return args
 
 def read_template(args):
+    """Reads JSON template into a python dictionary
+
+    :param args: Namespace of user provided arguments
+    :type args: argparse.Namespace
+    :return: Template dictionary from json file
+    :rtype: dict
+    """
     with open(args.template, "r") as f:
         template = json.load(f)
     return template
 
 def check_target_dir(args):
+    """Checks the target directory to see if it exists, is it a directory or a file, and considers the force flag.
+    Will raise FileExistsErrors if the directory exits, is not empty, and the force flag is not provided or if the target exists and is a file.
+
+    :param args: Namespace of user provided arguments
+    :type args: argparse.Namespace
+    :raises FileExistsError: If the target directory is not empty and the force flag if not provided. 
+    :raises FileExistsError: If the target directory exists as a file
+    :return: True if the program should proceed
+    :rtype: bool
+    """
     target = args.target
     if target.exists():
         if target.is_dir():
@@ -42,6 +64,11 @@ def check_target_dir(args):
         return True
 
 def setup_dir(args):
+    """Creates the directory structure and basic files.
+
+    :param args: Namespace of user provided arguments.
+    :type args: argparse.Namespace
+    """
     def make_dir(key, value):
         if isinstance(value, dict):
             for key1, value1 in value.items():
